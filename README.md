@@ -1,5 +1,6 @@
 # EmbeddedT6
-Compiler
+COMPILER
+
 Tiền xử lý: main.c -> main.i
 
   Là quá trình gộp tấp cả các file (thư viện, macro) vào 1 fie duy nhất là main.i
