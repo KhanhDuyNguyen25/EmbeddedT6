@@ -1,5 +1,5 @@
 # EmbeddedT6
-COMPILER
+**COMPILER**
 
 Tiền xử lý: main.c -> main.i
 
