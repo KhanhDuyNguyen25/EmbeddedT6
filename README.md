@@ -49,7 +49,9 @@ không có hàm main() cũng được phát hiện trong liên kết.
 </details>
 
 <details>
-<summary>POINTER</summary>
+<summary>
+ Pointer
+</summary>
 
 ## Void Pointer
  - `Con trỏ void có thể trỏ đến các vùng nhớ có các kiểu dữ liệu khác nhau`.
