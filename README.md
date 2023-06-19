@@ -8,7 +8,7 @@ Struct & Union
 
 ## **Struct** ##
 
-Struct sắp xếp data theo biến có byte lớn nhất
+Struct sắp xếp data theo biến có số byte lớn nhất
 
 struct có kích thước là kích thước tổng member và bộ nhớ đệm (padding) và có địa chỉ là địa chỉ của member đầu tiên nên tùy vào cách sắp xếp các biến trong struct, ta sẽ có kích thước khác nhau nên ta phải sắp xếp sao cho tối ưu.
 
