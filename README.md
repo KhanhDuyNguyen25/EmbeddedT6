@@ -1,4 +1,99 @@
 # Embedded-Interview
+
+<details>
+
+<summary>
+Struct & Union
+</summary>
+
+## **Struct** ##
+
+Struct sắp xếp data theo biến có byte lớn nhất
+
+struct có kích thước là kích thước tổng member và bộ nhớ đệm (padding) và có địa chỉ là địa chỉ của member đầu tiên nên tùy vào cách sắp xếp các biến trong struct, ta sẽ có kích thước khác nhau nên ta phải sắp xếp sao cho tối ưu.
+
+Khi nào dùng Struct: Struct cùng một thời điểm ta có thể chọn cùng lúc nhiều member
+VD :
+
+struct {
+
+	uint8_t var1;   // 1 byte  
+	uint32_t var2;  // 4byte   
+	uint64_t var3;  // 8 byte  
+}
+
+Lần quét 1: lưu 1byte var1 và lưu được thêm 4byte var2 cùng 3byte bộ nhớ đệm. Lần quét 2: lưu hết 8 byte var3 => tổng hết 16 byte
+
+struct {
+
+	uint8_t var1;   // 1 byte  
+	uint64_t var3;  // 8byte   
+	uint32_t var2;  // 4 byte  
+}
+
+Lần quét 1: lưu 1byte var1 và 7byte bộ nhớ đệm. Lần quét 2: lưu hết 8 byte var3. Lần quét 3: lưu 4byte var2 và 4byte bộ nhớ đệm  => tổng hết 24 byte
+
+## **Union** ##
+
+union có kích thước là kích thước member lớn nhất (member chứ ko phải kiểu dữ liệu). 
+
+Địa chỉ của union giống với địa chỉ các member dùng chung địa chỉ nên ta có thể thay đổi giá trị của union bằng cách thay đổi giá trị member
+
+Khi nào dùng Union: Union có rất nhiều member và tại 1 thời điểm mình chỉ sử dụng 1 member trong đó thôi thì ta sẽ dùng Union (ví dụ: Khi đi ra HN, ta sẽ có nhiều cách di chuyển, nhưng ta chỉ có thể chọn 1 cách).
+
+Vd
+
+![Capture](https://github.com/thaithang2000/EmbeddedT6/assets/136157839/78040569-2bfd-42ca-973c-f5a8c3331e76)
+
+=> kích thước union = kích thước var2[10] =10*4=40byte, kích thước union = kích thước member (không phải kích thước kiểu dữ liệu)
+có nghĩa là bằng kích thước của biến(var1,var2,var[3]) lớn nhất chứ không phải kiểu dữ liệu (uint8_t,float,uint64_t) lớn nhất
+
+Vd 
+
+![1](https://github.com/thaithang2000/EmbeddedT6/assets/136157839/fb0f8e47-5d93-4ab3-b826-6dfe50b1d1a5)
+
+
+=> xuất ra giá trị var1 là 0 3 4 6 4 5 vì xài chung địa chỉ với nhau nên khi thay đổi giá trị var2 và var3 var 1 cũng thay đổi theo thường được dùng trong việc giao tiếp giữa cái vđk mcu
+union dùng khi phải đưa ra lựa chọn dùng 1 trong các member tại cùng 1 thời điểm còn struct thì dùng khi đc chọn nhiều member cùng lúc
+
+</details>
+
+
+<details>
+
+<summary>
+Macro & Funtion
+</summary>
+
+## **Macro** ##
+
+Marco xảy ra trong quá trình tiền xử lý, lệnh #define được dùng để tạo marco
+
+Vd: #DEFINE MAX 10
+
+ #define CREATE_FUNC(name_func, cmd)   \
+ void name_func(){                     \
+      printf("%s\n", (char*)cmd);      \	    
+ }
+ 
+ Marco không có dấu chấm phẩy ở kết thúc vì không phải là câu lệnh
+  
+## **Function** ##
+
+Hàm được khai báo với chức năng giải quyết một vấn đề nhiều lần. Hàm có thể có và không có tham số. Hàm có vùng nhớ riêng khi được tạo program counter có chức năng đếm giá trị vùng nhớ từ 0x00 -> hết ví dụ program counter đếm tới 0x08 thì gặp funtion thì trước khi vào function vùng nhớ tiếp theo 0x09 được lưu vào stack counter rồi program counter mới trỏ vào vùng nhớ của function để đếm xong thì nó lấy giá trị 0x09 trong stack counter ra tiếp tục đếm.
+
+Program counter (bộ đếm): là 1 thanh ghi quản lý bộ nhớ của lệnh sẽ được thực thi tiếp theo. CPU đọc địa chỉ của lệnh sẽ được thực thi tiếp theo được lưu trữ trong bộ đếm chương trình và thực thi nó theo trình tự.
+
+Stack pointer: lưu địa chỉ của item gần đây nhất được đặt trên ngăn xếp. (lưu địa chỉ ngẫu nhiên).
+
+## **Ưu nhược điểm** ##
+
+Ưu điểm của function là không tốn thêm kích thước nếu gọi hàm đó nhiều lần vì đã có vùng nhớ riêng cho function nhưng tốc độ lại chậm hơn vì mỗi lần gọi nó lại phải trỏ lại vùng nhớ lưu function đó nó ngược với define về ưu nhược điểm. Define nó chỉ thay biến bằng giá trị nên trong quá trình complier mỗi khi gặp biến đc define nó chỉ thay bằng giá trị vd MAX thì được thay bằng 10 nên program counter sẽ tiếp tục đếm tiếp khi gặp biến define làm cho tốn thêm kích thước lưu trữ
+
+</details>
+
+
+
 <details>
 
 <summary>
@@ -355,7 +450,7 @@ return 0; }
 Static-Extern-Voltalite
 </summary>
 
-**STATIC**
+## **Static** ##
 
 Static gồm static toàn cục (global) và static cục bộ (local). Được lưu ở phân vùng data hoặc bss và tồn tại hết vòng đời của chương trình.
 
@@ -363,7 +458,7 @@ Static gồm static toàn cục (global) và static cục bộ (local). Được
 
 *Static cục bộ (local) chỉ khởi tạo 1 lần duy nhất và giá trị sẽ không bị mất khi thoát khỏi hàm mà giá trị của biến có thể tích lũy.
 
-**EXTERN**
+## **Extern** ##
 
 Extern dùng để gọi một biến hay một hàm từ file khác (không phải static) để sử dụng. Khi khai báo hàm hay biến dùng extern ta không được gán giá trị cho chúng. 
 
@@ -371,7 +466,7 @@ Câu lệnh: extern <kiểu dữ liệu> <tên biến hoặc hàm>;
 
 Cách build chương trình: gcc main.c "tên file muốn build" -o main. Cách chạy chương trình: ./main
 
-**VOLATILE**
+## **Volatile** ##
 
 Biến volatile là biến thông báo cho complier biết không được tối ưu biến này (thường dùng cho các biến lấy giá trị cảm biến, các biến data không biết khi nào thay đổi, nhiều task chạy song song dùng chung 1 biến). Do compiler có chế độ tối ưu chương trình để tăng tốc độ của chương trình nên sẽ bỏ qua các câu lệnh không làm thay đổi giá trị hay các lệnh lặp được gọi là optimizing. Nhưng trong các trường hợp nêu trên, giá trị thay đổi nhưng compiler không nhận ra và thực hiện việc tối ưu khiến cho kết quá sai.
 
