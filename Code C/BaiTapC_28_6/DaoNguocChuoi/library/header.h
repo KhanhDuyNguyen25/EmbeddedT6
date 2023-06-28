@@ -1,4 +1,4 @@
-#include "Source/Source.c"
+#include "source.c"
 
 int Lengh(char *str);
 

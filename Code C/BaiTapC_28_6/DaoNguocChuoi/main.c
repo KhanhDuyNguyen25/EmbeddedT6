@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include "Header/header.h"
-
+#include "library/header.h"
 int main(int argc, char const *argv[])
 {  
     int i = 0;
