@@ -14,7 +14,7 @@ uint16_t *createArray(uint16_t length){
     srand((int)time(0));
     for (uint16_t i = 0; i < length; i++)
     {
-        ptr[i] = random_number(1, 1000);
+        ptr[i] = random_number(1, 10);
     }
     return ptr; 
 }
@@ -59,13 +59,14 @@ int SearchID(uint16_t array[], uint16_t length, uint16_t ID){
 
 int main(int argc, char const *argv[])
 {
-   uint16_t *array = createArray(1000);
-   uint16_t ID = 100;
+   uint16_t *array = createArray(10);
+   uint16_t ID = 5;
 
-   sort(array, 1000);
-   
-   uint8_t result = SearchID(array, 1000, ID);
-
+   sort(array, 10);
+   for(int i = 0; i<10; i++){
+    printf("arr[%d] = %d\n", i, array[i]);
+   }
+   uint8_t result = SearchID(array, 10, ID);
    if(result = -1){
     printf("Khong phat hien ID");
    }else{
