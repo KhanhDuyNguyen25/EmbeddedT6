@@ -628,10 +628,10 @@ vậy trình biên dịch chương trình sẽ báo lỗi.
 Namespace là từ khóa trong C++ được sử dụng để định nghĩa một phạm vi nhằm
 mục đích phân biệt các hàm, lớp, biến, ... cùng tên trong các thư viện khác nhau.
 ## **Template trong C++ là gì?** ##
- Template (khuôn mẫu) là một từ khóa trong C++, và là một kiểu dữ liệu trừu
+1. Template (khuôn mẫu) là một từ khóa trong C++, và là một kiểu dữ liệu trừu
 tượng tổng quát hóa cho các kiểu dữ liệu int, float, double, bool...
- Template trong C++ có 2 loại đó là function template & class template.
- Template giúp người lập trình định nghĩa tổng quát cho hàm và lớp thay vì
+2. Template trong C++ có 2 loại đó là function template & class template.
+2. Template giúp người lập trình định nghĩa tổng quát cho hàm và lớp thay vì
 phải nạp chồng (overloading) cho từng hàm hay phương thức với những kiểu
 dữ liệu khác nhau.
 ## **Hàm ảo (virtual function) là gì?** ##
