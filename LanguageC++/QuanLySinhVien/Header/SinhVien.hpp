@@ -36,7 +36,7 @@ class SinhVien{
        int getID();
        string getTen();
        int getTuoi();
-       typeGioiTinh getGioi_Tinh();
+       string getGioi_Tinh();
        double getDiem_Toan();
        double getDiem_Ly();
        double getDiem_Hoa();
