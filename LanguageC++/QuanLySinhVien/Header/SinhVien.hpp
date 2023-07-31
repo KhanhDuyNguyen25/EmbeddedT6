@@ -28,7 +28,10 @@ class SinhVien{
         double DIEM_LY;
         double DIEM_HOA;
         double DIEM_TRUNG_BINH;
-        string HOC_LUC;
+        typeHocLuc HOC_LUC;
+    protected:    
+        void updateDiemTrungBinh(double diem_trung_binh);
+        void updateHocLuc(typeHocLuc hoc_luc);
     public:
        SinhVien(string Ten, int Tuoi, typeGioiTinh Gioi_Tinh,
          double Diem_Toan, double Diem_Ly, double Diem_Hoa);
@@ -41,7 +44,7 @@ class SinhVien{
        double getDiem_Ly();
        double getDiem_Hoa();
        double getDiemTB();
-       string getHoc_Luc();
+       typeHocLuc getHoc_Luc();
 
        void setTen(string Ten);
        void setTuoi(int Tuoi);

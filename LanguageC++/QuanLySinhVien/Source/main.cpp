@@ -82,15 +82,15 @@ double SinhVien::getDiemTB(){
             return (DIEM_TOAN + DIEM_LY + DIEM_HOA)/3;
         }
 
-string SinhVien::getHoc_Luc(){
+typeHocLuc SinhVien::getHoc_Luc(){
             if(getDiemTB()>= 8){
-                return "GIOI";
+                return GIOI;
             }else if(getDiemTB() >=6.5 ){
-                return "KHA";
+                return KHA;
             }else if(getDiemTB()>= 5){
-                return "TRUNG BINH";
+                return TRUNG_BINH;
             }else{ 
-                return "YEU";
+                return YEU;
                 }
         }
 
@@ -234,8 +234,163 @@ void xoaSinhVien(list<SinhVien>& database) {
     }
 }
 
+bool Compare (const char arr1[], const char arr2[]){
+    for (int i = 0; arr1[i] !='0' || arr2[i] != '\0'; i++ ){
+    if ((arr1[i] - arr2[i]) > 0){
+        return true;
+    } else if ((arr1[i] - arr2[i]) < 0){
+      return false;
+    } else {
+      return true;
+    }
+    }   
+}
+
+typeGioiTinh convertToGioiTinh(const string &GioiTinhStr){
+    if(GioiTinhStr == "Nam"){
+        return NAM;
+    } else if (GioiTinhStr == "Nu") {
+        return NU;
+    }
+}
+
+void SapXepSinhVien(SinhVien &sv1, SinhVien &sv2){
+
+    //sap xep TEN
+    string tempTen = sv1.getTen();
+    sv1.setTen(sv2.getTen());
+    sv2.setTen(tempTen);
+
+    //sap xep Tuoi
+    int tempTuoi = sv1.getTuoi();
+    sv1.setTuoi(sv2.getTuoi());
+    sv2.setTuoi(tempTuoi);
+
+    // sap xep GIOI_TINH
+    string tempGioiTinhStr = sv1.getGioi_Tinh();
+    typeGioiTinh tempGioiTinh = convertToGioiTinh(tempGioiTinhStr);
+    sv1.setGioi_Tinh(convertToGioiTinh(sv2.getGioi_Tinh()));
+    sv2.setGioi_Tinh(tempGioiTinh);
+
+    // sap xep DIEM_TOAN
+    double tempDiemToan = sv1.getDiem_Toan();
+    sv1.setDiem_Toan(sv2.getDiem_Toan());
+    sv2.setDiem_Toan(tempDiemToan);
+
+    // sap xep DIEM_LY
+    double tempDiemLy = sv1.getDiem_Ly();
+    sv1.setDiem_Ly(sv2.getDiem_Ly());
+    sv2.setDiem_Ly(tempDiemLy);
+
+    // sap xep DIEM_HOA
+    double tempDiemHoa = sv1.getDiem_Hoa();
+    sv1.setDiem_Hoa(sv2.getDiem_Hoa());
+    sv2.setDiem_Hoa(tempDiemHoa);
+
+}
+
+void sapXepTheoTen(list<SinhVien>& database) {
+    for (auto it = database.begin(); it != database.end(); it++)
+    {
+        for (auto it2 = std::next(it); it2 != database.end(); it2++)
+        {
+            if (Compare(it->getTen().c_str(), it2->getTen().c_str()))
+            {
+                 SapXepSinhVien(*it, *it2);
+            }
+            
+        }
+        
+    }
+    
+}
+
+void hienThiDanhSachSinhVien(list<SinhVien>& database) {
+    cout << "Danh sach sinh vien:" << endl;
+    for (auto& sv : database) {
+        cout << "ID: " << sv.getID() << ", Ten: " << sv.getTen() << ", Tuoi: " << sv.getTuoi()<<", Gioi Tinh: "<<sv.getGioi_Tinh() 
+             << ", Diem toan: " << sv.getDiem_Toan() << ", Diem ly: " << sv.getDiem_Ly()
+             << ", Diem hoa: " << sv.getDiem_Hoa() << ", Diem trung binh: " << sv.getDiemTB()
+             << ", Hoc luc: ";
+        switch (sv.getHoc_Luc()) {
+            case GIOI:
+                cout << "Gioi";
+                break;
+            case KHA:
+                cout << "Kha";
+                break;
+            case TRUNG_BINH:
+                cout << "Trung binh";
+                break;
+            case YEU:
+                cout << "Yeu";
+                break;
+            default:
+                cout << "N/A";
+                break;
+        }
+        cout << endl;
+    }
+}
+
 int main(){
     list<SinhVien> database;
+ int choice;
+    do {
+        cout << "\n------- Menu -------" << endl;
+        cout << "1. Them sinh vien" << endl;
+        cout << "2. Cap nhat thong tin sinh vien" << endl;
+        cout << "3. Xoa sinh vien" << endl;
+        cout << "4. Hien thi danh sach sinh vien" << endl;
+        cout << "5. Sap xep sinh vien theo ten" << endl;
+        cout << "6. Tim kiem sinh vien theo ten" << endl;
+        cout << "0. Thoat" << endl;
+        cout << "Nhap lua chon: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                ThemSinhVien(database);
+                break;
+            case 2:
+                updateSinhVien(database);
+                break;
+            case 3:
+                xoaSinhVien(database);
+                break;
+            case 4:
+                hienThiDanhSachSinhVien(database);
+                break;
+            case 5:
+                sapXepTheoTen(database);
+                cout << "Sap xep sinh vien theo ten thanh cong!" << endl;
+                break;
+            case 6: {
+                string ten;
+                cout << "Nhap ten sinh vien can tim: ";
+                cin.ignore();
+                getline(cin, ten);
+                list<SinhVien> result;
+                for ( auto& sv : database) {
+                    if (sv.getTen() == ten) {
+                        result.push_back(sv);
+                    }
+                }
+                if (result.empty()) {
+                    cout << "Khong tim thay sinh vien co ten: " << ten << endl;
+                } else {
+                    hienThiDanhSachSinhVien(result);
+                }
+                break;
+            }
+            case 0:
+                cout << "Ket thuc chuong trinh!" << endl;
+                break;
+            default:
+                cout << "Lua chon khong hop le!" << endl;
+                break;
+        }
+    } while (choice != 0);
 
     return 0;
 }
